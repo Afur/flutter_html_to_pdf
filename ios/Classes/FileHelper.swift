@@ -7,6 +7,6 @@ class FileHelper {
      */
     class func getContent(from filePath: String) -> String {
         let fileURL = URL(fileURLWithPath: filePath)
-        return try! String(contentsOf: fileURL, encoding: .ascii)
+        return try! String(contentsOf: fileURL, encoding: String.Encoding.utf8)
     }
 }

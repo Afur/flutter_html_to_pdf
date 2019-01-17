@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Plugin example app',
     home: MyApp(),
   ));
 }
@@ -24,13 +23,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    generateExampleDocument();
   }
 
-  Future<void> initPlatformState() async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String path = appDocDir.path;
-
+  Future<void> generateExampleDocument() async {
     var htmlContent = """
     <!DOCTYPE html>
     <html>
@@ -47,7 +43,6 @@ class _MyAppState extends State<MyApp> {
       </style>
     </head>
       <body>
-      
         <h2>PDF Generated with flutter_html_to_pdf plugin</h2>
         
         <table style="width:100%">
@@ -68,13 +63,16 @@ class _MyAppState extends State<MyApp> {
         
         <p>Image loaded from web</p>
         <img src="https://i.imgur.com/wxaJsXF.png" alt="web-img">
-       
       </body>
     </html>
     """;
 
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    var targetPath = appDocDir.path;
+    var targetFileName = "example-pdf";
+
     var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
-        htmlContent, path, "example-pdf");
+        htmlContent, targetPath, targetFileName);
     generatedPdfFilePath = generatedPdfFile.path;
   }
 

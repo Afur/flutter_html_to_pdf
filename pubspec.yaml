@@ -1,6 +1,6 @@
 name: flutter_html_to_pdf
 description: Flutter plugin for generating PDF files from HTML
-version: 0.1.0
+version: 0.2.1
 author: Artur Teodorowicz <teodorowiczartur@gmail.com>
 homepage: https://github.com/Afur/flutter_html_to_pdf
 

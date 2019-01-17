@@ -9,7 +9,12 @@ import java.io.File
 
 class PdfPrinter(private val printAttributes: PrintAttributes) {
 
-    fun print(printAdapter: PrintDocumentAdapter, path: File, fileName: String, callback: PdfPrinter.CallbackPrint) {
+    interface Callback {
+        fun success(path: String)
+        fun onFailure()
+    }
+
+    fun print(printAdapter: PrintDocumentAdapter, path: File, fileName: String, callback: PdfPrinter.Callback) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             printAdapter.onLayout(null, printAttributes, null, object : PrintDocumentAdapter.LayoutResultCallback() {
                 override fun onLayoutFinished(info: PrintDocumentInfo, changed: Boolean) {
@@ -47,12 +52,6 @@ class PdfPrinter(private val printAttributes: PrintAttributes) {
         }
 
         return null
-    }
-
-
-    interface CallbackPrint {
-        fun success(path: String)
-        fun onFailure()
     }
 
     companion object {

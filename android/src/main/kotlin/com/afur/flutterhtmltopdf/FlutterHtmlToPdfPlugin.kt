@@ -32,7 +32,7 @@ class FlutterHtmlToPdfPlugin(val mRegistrar: Registrar) : MethodCallHandler {
           }
 
           override fun failure() {
-              result.error("ERROR", "Unable to convert html file to pdf", "")
+              result.error("ERROR", "Unable to convert html to pdf document!", "")
           }
       })
   }

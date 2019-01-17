@@ -15,16 +15,12 @@ import java.io.File
 
 class HtmlToPdfConverter {
 
-    /** callback interface to get the result back after created pdf file */
     interface Callback {
         fun success(filePath: String)
         fun failure()
     }
 
     companion object {
-
-        private val REQUEST_CODE = 101
-
         fun convert(filePath : String, activity: Activity, callback: Callback) {
             val webView = WebView(activity.applicationContext)
             val htmlContent = File(filePath).readText(Charsets.UTF_8)
@@ -39,22 +35,10 @@ class HtmlToPdfConverter {
         }
 
         fun createPdfFromWebView(webView: WebView, activity: Activity, callback: Callback) {
-
-            val outputPath = activity.applicationContext.applicationInfo.dataDir
-            val path = Environment.getExternalStoragePublicDirectory("$outputPath/pdf/")
-            val fileName = "GeneratedFromHtml.pdf"
-
-            //check the marshmallow permission
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    activity.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE)
-                    callback.failure()
-                    return
-                }
-            }
-
-            val jobName = "Generate PDF"
+            val path = activity.applicationContext.filesDir
+            val fileName = "GeneratedFromHtmlContent.pdf"
             var attributes: PrintAttributes? = null
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 attributes = PrintAttributes.Builder()
                         .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
@@ -63,7 +47,7 @@ class HtmlToPdfConverter {
             }
             val pdfPrint = PdfPrinter(attributes!!)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, fileName, object : PdfPrinter.CallbackPrint {
+                pdfPrint.print(webView.createPrintDocumentAdapter("Generate PDF Document"), path, fileName, object : PdfPrinter.Callback {
                     override fun success(filePath: String) {
                         callback.success(filePath)
                     }
@@ -75,6 +59,4 @@ class HtmlToPdfConverter {
             }
         }
     }
-
-
 }

@@ -12,7 +12,7 @@ public class SwiftFlutterHtmlToPdfPlugin: NSObject, FlutterPlugin{
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
     
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
     case "convertHtmlToPdf":
         let args = call.arguments as? [String: Any]
@@ -33,6 +33,18 @@ public class SwiftFlutterHtmlToPdfPlugin: NSObject, FlutterPlugin{
             let convertedFilePath = convertedFileURL.absoluteString.replacingOccurrences(of: "file://", with: "") // return generated pdf path
             if let viewWithTag = viewControler?.view.viewWithTag(100) {
                 viewWithTag.removeFromSuperview() // remove hidden webview when pdf is generated
+                
+                // clear WKWebView cache
+                if #available(iOS 9.0, *) {
+                    WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+                        records.forEach { record in
+                            WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+                        }
+                    }
+                }
+                
+                // dispose WKWebView
+                self.wkWebView = nil
             }
             
             result(convertedFilePath)

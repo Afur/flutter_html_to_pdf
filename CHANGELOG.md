@@ -1,3 +1,7 @@
+## 0.2.3
+
+* Updated README.md
+
 ## 0.2.2
 
 * iOS: Changed string encoding to utf-8

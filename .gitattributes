@@ -1,1 +1,2 @@
+*.rb linguist-vendored=false
 *.rb linguist-language=Dart

@@ -78,7 +78,7 @@ or if you want to use the image ***File*** object
 <img src="${imageFile.path}" alt="web-img">
 ```
 
-##### Remember that all files needs to be available from the application side. The library assumes that the user has granted all permissions!
+#### Remember that all files needs to be accessible from the application side. The library assumes that the user has granted all permissions!
 
 
 

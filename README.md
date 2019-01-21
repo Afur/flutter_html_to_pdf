@@ -23,7 +23,6 @@ var htmlContent =
 </head>
   <body>
     <h2>PDF Generated with flutter_html_to_pdf plugin</h2>
-
     <table style="width:100%">
       <caption>Sample HTML Table</caption>
       <tr>
@@ -39,7 +38,6 @@ var htmlContent =
         <td>50</td>
       </tr>
     </table>
-
     <p>Image loaded from web</p>
     <img src="https://i.imgur.com/wxaJsXF.png" alt="web-img">
   </body>
@@ -75,4 +73,13 @@ If your want to add local image from device to your **HTML** you need to pass pa
 ```html
 <img src="file:///storage/example/your_sample_image.png" alt="web-img">
 ```
+or if you want to use the image ***File*** object
+```html
+<img src="${imageFile.path}" alt="web-img">
+```
+
+##### Remember that all files needs to be available from the application side. The library assumes that the user has granted all permissions!
+
+
+
 

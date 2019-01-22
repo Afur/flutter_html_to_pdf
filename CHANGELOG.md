@@ -1,3 +1,7 @@
+## 0.3.0
+
+* iOS: Fixed issue with loading local images to PDF document
+
 ## 0.2.3
 
 * Updated README.md

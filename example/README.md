@@ -34,17 +34,17 @@ class _MyAppState extends State<MyApp> {
     <!DOCTYPE html>
     <html>
     <head>
-      <style>
-      table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      th, td, p {
-        padding: 5px;
-        text-align: left;
-      }
-      </style>
-    </head>
+        <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        th, td, p {
+          padding: 5px;
+          text-align: left;
+        }
+        </style>
+      </head>
       <body>
         <h2>PDF Generated with flutter_html_to_pdf plugin</h2>
 

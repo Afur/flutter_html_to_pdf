@@ -1,3 +1,7 @@
+## 0.4.1
+
+* Android: Small code cleanup
+
 ## 0.4.0
 
 * Android: Updated Gradle and Kotlin versions

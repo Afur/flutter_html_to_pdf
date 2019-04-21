@@ -8,7 +8,7 @@ import java.io.File
 class PdfPrinter(private val printAttributes: PrintAttributes) {
 
     interface Callback {
-        fun onSuccess(path: String)
+        fun onSuccess(filePath: String)
         fun onFailure()
     }
 

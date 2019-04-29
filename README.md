@@ -1,5 +1,7 @@
 # flutter_html_to_pdf
 
+[![pub package](https://img.shields.io/pub/v/flutter_html_to_pdf.svg)](https://pub.dartlang.org/packages/flutter_html_to_pdf)
+
 Flutter plugin for generating PDF files from HTML
 
 ### Usage
@@ -78,6 +80,7 @@ or if you want to use the image ***File*** object
 <img src="${imageFile.path}" alt="web-img">
 ```
 
+Many images inside your document can significantly affect the final file size so I suggest to use [flutter_image_compress](https://github.com/OpenFlutter/flutter_image_compress) plugin.
 
 
 

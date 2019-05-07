@@ -19,7 +19,9 @@ class FlutterHtmlToPdfPlugin(private val registrar: Registrar) : MethodCallHandl
     override fun onMethodCall(call: MethodCall, result: Result) {
         if (call.method == "convertHtmlToPdf") {
             convertHtmlToPdf(call, result)
-        } else {
+        } else if(call.method == "convertWebToPdf"){
+            convertWebToPdf(call, result)
+        }else {
             result.notImplemented()
         }
     }
@@ -28,6 +30,19 @@ class FlutterHtmlToPdfPlugin(private val registrar: Registrar) : MethodCallHandl
         val htmlFilePath = call.argument<String>("htmlFilePath")
 
         HtmlToPdfConverter().convert(htmlFilePath!!, registrar.activity(), object : HtmlToPdfConverter.Callback {
+            override fun onSuccess(filePath: String) {
+                result.success(filePath)
+            }
+
+            override fun onFailure() {
+                result.error("ERROR", "Unable to convert html to pdf document!", "")
+            }
+        })
+    }
+    private fun convertWebToPdf(call: MethodCall, result: Result) {
+        val url = call.argument<String>("url")
+
+        WebToPdfConverter().convert(url!!, registrar.activity(), object : WebToPdfConverter.Callback {
             override fun onSuccess(filePath: String) {
                 result.success(filePath)
             }

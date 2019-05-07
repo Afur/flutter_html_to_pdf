@@ -10,34 +10,55 @@ class FlutterHtmlToPdf {
       const MethodChannel('flutter_html_to_pdf');
 
   /// Creates PDF Document from HTML content
-  static Future<File> convertFromHtmlContent(String htmlContent, String targetDirectory, String targetName) async {
-    var temporaryCreatedHtmlFile = await FileUtils.createFileWithStringContent(htmlContent, "$targetDirectory/$targetName.html");
-    var generatedPdfFilePath = await _convertFromHtmlFilePath(temporaryCreatedHtmlFile.path);
-    var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
+  static Future<File> convertFromHtmlContent(
+      String htmlContent, String targetDirectory, String targetName) async {
+    var temporaryCreatedHtmlFile = await FileUtils.createFileWithStringContent(
+        htmlContent, "$targetDirectory/$targetName.html");
+    var generatedPdfFilePath =
+        await _convertFromHtmlFilePath(temporaryCreatedHtmlFile.path);
+    var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(
+        generatedPdfFilePath, targetDirectory, targetName);
     temporaryCreatedHtmlFile.delete();
 
     return generatedPdfFile;
   }
 
+  static Future<File> convertFromWebContent(
+      String url, String targetDirectory, String targetName) async {
+    var generatedPdfFilePath = await _convertFromWeb(url);
+    var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(
+        generatedPdfFilePath, targetDirectory, targetName);
+
+    return generatedPdfFile;
+  }
+
   /// Creates PDF Document from File that contains HTML content
-  static Future<File> convertFromHtmlFile(File htmlFile, String targetDirectory, String targetName) async {
+  static Future<File> convertFromHtmlFile(
+      File htmlFile, String targetDirectory, String targetName) async {
     var generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFile.path);
-    var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
+    var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(
+        generatedPdfFilePath, targetDirectory, targetName);
 
     return generatedPdfFile;
   }
 
   /// Creates PDF Document from path to File that contains HTML content
-  static Future<File> convertFromHtmlFilePath(String htmlFilePath, String targetDirectory, String targetName) async {
+  static Future<File> convertFromHtmlFilePath(
+      String htmlFilePath, String targetDirectory, String targetName) async {
     var generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFilePath);
-    var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
+    var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(
+        generatedPdfFilePath, targetDirectory, targetName);
 
     return generatedPdfFile;
   }
-  
+
   static Future<String> _convertFromHtmlFilePath(String htmlFilePath) async {
-    return await _channel.invokeMethod('convertHtmlToPdf', <String, dynamic>{
-      'htmlFilePath': htmlFilePath
-    });
+    return await _channel.invokeMethod(
+        'convertHtmlToPdf', <String, dynamic>{'htmlFilePath': htmlFilePath});
+  }
+
+  static Future<String> _convertFromWeb(String url) async {
+    return await _channel
+        .invokeMethod('convertWebToPdf', <String, dynamic>{'url': url});
   }
 }

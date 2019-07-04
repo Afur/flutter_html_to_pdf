@@ -1,4 +1,4 @@
-## 0.4.2
+## 0.4.3
 
 * iOS: Added longer delay to fix the error with poor local images loading
 

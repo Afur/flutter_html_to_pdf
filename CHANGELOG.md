@@ -1,3 +1,7 @@
+## 0.4.2
+
+* iOS: Added longer delay to fix the error with poor local images loading
+
 ## 0.4.1
 
 * Android: Small code cleanup

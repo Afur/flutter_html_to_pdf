@@ -1,3 +1,7 @@
+## 0.5.1
+
+* Android: Enabled JavaScript support (Thanks [GautamChibde](https://github.com/GautamChibde))
+
 ## 0.5.0
 
 * Android: Migration to AndroidX

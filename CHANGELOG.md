@@ -1,3 +1,7 @@
+## 0.5.0
+
+* Android: Migration to AndroidX
+
 ## 0.4.3
 
 * iOS: Added longer delay to fix the error with poor local images loading

@@ -1,3 +1,7 @@
+## 0.5.2
+
+* iOS: Support for Swift version 4.2
+
 ## 0.5.1
 
 * Android: Enabled JavaScript support (Thanks [GautamChibde](https://github.com/GautamChibde))

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_html_to_pdf/file_utils.dart';
+import 'package:flutter_html_to_pdf/pdf_configuration.dart';
 
 /// HTML to PDF Converter
 class FlutterHtmlToPdf {
@@ -10,9 +11,9 @@ class FlutterHtmlToPdf {
       const MethodChannel('flutter_html_to_pdf');
 
   /// Creates PDF Document from HTML content
-  static Future<File> convertFromHtmlContent(String htmlContent, String targetDirectory, String targetName) async {
+  static Future<File> convertFromHtmlContent(String htmlContent, String targetDirectory, String targetName, {PdfConfiguration configuration}) async {
     var temporaryCreatedHtmlFile = await FileUtils.createFileWithStringContent(htmlContent, "$targetDirectory/$targetName.html");
-    var generatedPdfFilePath = await _convertFromHtmlFilePath(temporaryCreatedHtmlFile.path);
+    var generatedPdfFilePath = await _convertFromHtmlFilePath(temporaryCreatedHtmlFile.path, configuration);
     var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
     temporaryCreatedHtmlFile.delete();
 
@@ -20,24 +21,27 @@ class FlutterHtmlToPdf {
   }
 
   /// Creates PDF Document from File that contains HTML content
-  static Future<File> convertFromHtmlFile(File htmlFile, String targetDirectory, String targetName) async {
-    var generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFile.path);
+  static Future<File> convertFromHtmlFile(File htmlFile, String targetDirectory, String targetName, {PdfConfiguration configuration}) async {
+    var generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFile.path, configuration);
     var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
 
     return generatedPdfFile;
   }
 
   /// Creates PDF Document from path to File that contains HTML content
-  static Future<File> convertFromHtmlFilePath(String htmlFilePath, String targetDirectory, String targetName) async {
-    var generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFilePath);
+  static Future<File> convertFromHtmlFilePath(String htmlFilePath, String targetDirectory, String targetName, {PdfConfiguration configuration}) async {
+    var generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFilePath, configuration);
     var generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
 
     return generatedPdfFile;
   }
   
-  static Future<String> _convertFromHtmlFilePath(String htmlFilePath) async {
+  static Future<String> _convertFromHtmlFilePath(String htmlFilePath, PdfConfiguration configuration) async {
     return await _channel.invokeMethod('convertHtmlToPdf', <String, dynamic>{
-      'htmlFilePath': htmlFilePath
+      'htmlFilePath': htmlFilePath,
+      'delay': configuration?.additionalConvertDelay,
+      'width': configuration?.width,
+      'height': configuration?.height
     });
   }
 }

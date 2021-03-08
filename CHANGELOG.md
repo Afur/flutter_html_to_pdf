@@ -1,3 +1,9 @@
+## 0.6.0
+
+* Support for Null Safety
+* iOS: Some improvements
+* Android: Allow webview to access local files
+
 ## 0.5.2
 
 * iOS: Support for Swift version 4.2

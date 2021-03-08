@@ -22,6 +22,7 @@ class HtmlToPdfConverter {
         val htmlContent = File(filePath).readText(Charsets.UTF_8)
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setAllowFileAccess(true);
         webView.loadDataWithBaseURL(null, htmlContent, "text/HTML", "UTF-8", null)
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {

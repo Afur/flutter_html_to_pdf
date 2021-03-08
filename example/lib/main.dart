@@ -71,8 +71,7 @@ class _MyAppState extends State<MyApp> {
     var targetPath = appDocDir.path;
     var targetFileName = "example-pdf";
 
-    var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
-        htmlContent, targetPath, targetFileName);
+    var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(htmlContent, targetPath, targetFileName);
     generatedPdfFilePath = generatedPdfFile.path;
   }
 
@@ -82,15 +81,12 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: RaisedButton(
+        child: ElevatedButton(
           child: Text("Open Generated PDF Preview"),
           onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => PDFViewerScaffold(
-                        appBar: AppBar(title: Text("Generated PDF Document")),
-                        path: generatedPdfFilePath)),
-              ),
+            context,
+            MaterialPageRoute(builder: (context) => PDFViewerScaffold(appBar: AppBar(title: Text("Generated PDF Document")), path: generatedPdfFilePath)),
+          ),
         ),
       ),
     ));

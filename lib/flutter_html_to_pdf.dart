@@ -39,6 +39,7 @@ class FlutterHtmlToPdf {
 
   /// Assumes the invokeMethod call will return successfully
   static Future<String> _convertFromHtmlFilePath(String htmlFilePath) async {
-    return _channel.invokeMethod('convertHtmlToPdf', <String, dynamic>{'htmlFilePath': htmlFilePath}) as String;
+    final result = await _channel.invokeMethod('convertHtmlToPdf', <String, dynamic>{'htmlFilePath': htmlFilePath});
+    return result as String;
   }
 }

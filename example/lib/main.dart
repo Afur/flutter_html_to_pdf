@@ -83,10 +83,12 @@ class _MyAppState extends State<MyApp> {
       body: Center(
         child: ElevatedButton(
           child: Text("Open Generated PDF Preview"),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PDFViewerScaffold(appBar: AppBar(title: Text("Generated PDF Document")), path: generatedPdfFilePath)),
-          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PDFViewerScaffold(appBar: AppBar(title: Text("Generated PDF Document")), path: generatedPdfFilePath)),
+            );
+          },
         ),
       ),
     ));

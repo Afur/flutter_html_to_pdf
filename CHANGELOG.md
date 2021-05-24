@@ -1,3 +1,7 @@
+## 0.6.1
+
+* Specify ios class plugin
+
 ## 0.6.0
 
 * Support for Null Safety

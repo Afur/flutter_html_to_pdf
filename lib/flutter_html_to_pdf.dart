@@ -11,7 +11,7 @@ class FlutterHtmlToPdf {
   /// Creates PDF Document from HTML content
   /// Can throw a [PlatformException] or (unlikely) a [MissingPluginException] converting html to pdf
   static Future<File> convertFromHtmlContent(String htmlContent, String targetDirectory, String targetName) async {
-    final temporaryCreatedHtmlFile = await FileUtils.createFileWithStringContent(htmlContent, "$targetDirectory/$targetName.html");
+    final temporaryCreatedHtmlFile = await FileUtils.createFileWithStringContent(htmlContent, "$targetDirectory/$targetName-temp.html");
     final generatedPdfFilePath = await _convertFromHtmlFilePath(temporaryCreatedHtmlFile.path);
     final generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
     temporaryCreatedHtmlFile.delete();

@@ -1,6 +1,7 @@
-package com.afur.flutterhtmltopdf
+package com.afur.flutter_html_to_pdf
 
-import android.app.Activity
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.print.PdfPrinter
 import android.print.PrintAttributes
@@ -17,29 +18,30 @@ class HtmlToPdfConverter {
         fun onFailure()
     }
 
-    fun convert(filePath: String, activity: Activity, callback: Callback) {
-        val webView = WebView(activity.applicationContext)
+    @SuppressLint("SetJavaScriptEnabled")
+    fun convert(filePath: String, applicationContext: Context, callback: Callback) {
+        val webView = WebView(applicationContext)
         val htmlContent = File(filePath).readText(Charsets.UTF_8)
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webView.getSettings().setAllowFileAccess(true);
+        webView.settings.javaScriptEnabled = true
+        webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        webView.settings.allowFileAccess = true
         webView.loadDataWithBaseURL(null, htmlContent, "text/HTML", "UTF-8", null)
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                createPdfFromWebView(webView, activity, callback)
+                createPdfFromWebView(webView, applicationContext, callback)
             }
         }
     }
 
-    fun createPdfFromWebView(webView: WebView, activity: Activity, callback: Callback) {
-        val path = activity.applicationContext.filesDir
+    fun createPdfFromWebView(webView: WebView, applicationContext: Context, callback: Callback) {
+        val path = applicationContext.filesDir
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
             val attributes = PrintAttributes.Builder()
-                    .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-                    .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
-                    .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build()
+                .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
+                .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build()
 
             val printer = PdfPrinter(attributes)
 

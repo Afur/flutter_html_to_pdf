@@ -23,7 +23,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.afur.flutterhtmltopdf
+        package: com.afur.flutter_html_to_pdf
         pluginClass: FlutterHtmlToPdfPlugin
       ios:
         pluginClass: FlutterHtmlToPdfPlugin

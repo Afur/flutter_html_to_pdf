@@ -5,7 +5,7 @@
 .pub/
 pubspec.lock
 
-/.idea/
+.idea/
 build/
 
 # generated files not to be checked in

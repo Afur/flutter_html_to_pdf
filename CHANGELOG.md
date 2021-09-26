@@ -1,3 +1,7 @@
+## 0.7.0
+
+* Android: Support V2 embedding (Thanks [nikitadol](https://github.com/nikitadol))
+
 ## 0.6.1
 
 * Specify ios class plugin

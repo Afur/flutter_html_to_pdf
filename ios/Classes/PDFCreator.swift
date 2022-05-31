@@ -6,24 +6,36 @@ class PDFCreator {
      Creates a PDF using the given print formatter and saves it to the user's document directory.
      - returns: The generated PDF path.
      */
-    class func create(printFormatter: UIPrintFormatter) -> URL {
+     class func create(printFormatter: UIPrintFormatter) -> URL {
         
         // assign the print formatter to the print page renderer
         let renderer = UIPrintPageRenderer()
         renderer.addPrintFormatter(printFormatter, startingAtPageAt: 0)
+
+        // A4 size
+        let pageSize = CGSize(width: 595.2, height: 841.8)
+
+        // create some sensible margins
+        let pageMargins = UIEdgeInsets(top: 10, left: 18, bottom: 10, right: 24)
+
+        // calculate the printable rect from the above two
+        let printableRect = CGRect(x: pageMargins.left, y: pageMargins.top, width: pageSize.width - pageMargins.left - pageMargins.right, height: pageSize.height - pageMargins.top - pageMargins.bottom)
+
+        // and here's the overall paper rectangle
+        let paperRect = CGRect(x: 0, y: 0, width: pageSize.width, height: pageSize.height)
         
-        // assign paperRect and printableRect values
-        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) // A4, 72 dpi
-        renderer.setValue(page, forKey: "paperRect")
-        renderer.setValue(page, forKey: "printableRect")
-        
-        // create pdf context and draw each page
+        renderer.setValue(NSValue(cgRect: paperRect), forKey: "paperRect")
+        renderer.setValue(NSValue(cgRect: printableRect), forKey: "printableRect")
+
         let pdfData = NSMutableData()
-        UIGraphicsBeginPDFContextToData(pdfData, .zero, nil)
-        
-        for i in 0..<renderer.numberOfPages {
+        UIGraphicsBeginPDFContextToData(pdfData, paperRect, nil)
+        renderer.prepare(forDrawingPages: NSMakeRange(0, renderer.numberOfPages))
+
+        let bounds = UIGraphicsGetPDFContextBounds()
+
+        for i in 0...(renderer.numberOfPages - 1) {
             UIGraphicsBeginPDFPage()
-            renderer.drawPage(at: i, in: UIGraphicsGetPDFContextBounds())
+            renderer.drawPage(at: i, in: bounds)
         }
         
         UIGraphicsEndPDFContext();

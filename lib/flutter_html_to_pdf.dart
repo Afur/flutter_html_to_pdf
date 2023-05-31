@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_html_to_pdf/file_utils.dart';
+import 'file_utils.dart';
 
 /// HTML to PDF Converter
 class FlutterHtmlToPdf {
-  static const MethodChannel _channel = const MethodChannel('flutter_html_to_pdf');
+  static const MethodChannel _channel = MethodChannel('flutter_html_to_pdf');
 
   /// Creates PDF Document from HTML content
   /// Can throw a [PlatformException] or (unlikely) a [MissingPluginException] converting html to pdf

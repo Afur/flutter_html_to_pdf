@@ -41,7 +41,7 @@ class HtmlToPdfConverter {
             val attributes = PrintAttributes.Builder()
                 .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
                 .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
-                .setMinMargins(PrintAttributes.Margins.NO_MARGINS).build()
+                .setMinMargins(PrintAttributes.Margins(50, 50, 50, 50)).build()
 
             val printer = PdfPrinter(attributes)
 

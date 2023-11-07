@@ -1,3 +1,11 @@
+## 0.8.2
+
+* update to flutter 3.10
+
+## 0.7.0
+
+* update kotlin_version to 1.7.20 and gradle version to 7.3.0
+
 ## 0.7.0
 
 * Android: Support V2 embedding (Thanks [nikitadol](https://github.com/nikitadol))

@@ -4,11 +4,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: MyApp(),
-  ));
+  runApp(
+    MaterialApp(
+      home: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -17,12 +20,42 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late String generatedPdfFilePath;
+  String? generatedPdfFilePath;
 
   @override
-  void initState() {
-    super.initState();
-    generateExampleDocument();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      body: SafeArea(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: buildBody(),
+        ),
+      ),
+    ));
+  }
+
+  Column buildBody() {
+    return Column(
+      children: [
+        Expanded(
+          child: generatedPdfFilePath != null
+              ? PdfView(path: generatedPdfFilePath!)
+              : SizedBox(),
+        ),
+        buildButton(),
+      ],
+    );
+  }
+
+  Padding buildButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: ElevatedButton(
+        child: Text("Open Generated PDF Preview"),
+        onPressed: generateExampleDocument,
+      ),
+    );
   }
 
   Future<void> generateExampleDocument() async {
@@ -75,20 +108,11 @@ class _MyAppState extends State<MyApp> {
       targetPath,
       targetFileName,
     );
-    generatedPdfFilePath = generatedPdfFile.path;
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: ElevatedButton(
-          child: Text("Open Generated PDF Preview"),
-          onPressed: () {},
-        ),
-      ),
-    ));
+    setState(
+      () {
+        generatedPdfFilePath = generatedPdfFile.path;
+      },
+    );
   }
 }

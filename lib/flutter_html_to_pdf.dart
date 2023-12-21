@@ -12,6 +12,7 @@ class FlutterHtmlToPdf {
   /// Can throw a [PlatformException] or (unlikely) a [MissingPluginException] converting html to pdf
   static Future<File> convertFromHtmlContent(String htmlContent, String targetDirectory, String targetName) async {
     final temporaryCreatedHtmlFile = await FileUtils.createFileWithStringContent(htmlContent, "$targetDirectory/$targetName.html");
+    await FileUtils.appendStyleTagToHtmlFile(temporaryCreatedHtmlFile.path);
     final generatedPdfFilePath = await _convertFromHtmlFilePath(temporaryCreatedHtmlFile.path);
     final generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
     temporaryCreatedHtmlFile.delete();
@@ -22,6 +23,7 @@ class FlutterHtmlToPdf {
   /// Creates PDF Document from File that contains HTML content
   /// Can throw a [PlatformException] or (unlikely) a [MissingPluginException] converting html to pdf
   static Future<File> convertFromHtmlFile(File htmlFile, String targetDirectory, String targetName) async {
+    await FileUtils.appendStyleTagToHtmlFile(htmlFile.path);
     final generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFile.path);
     final generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
 
@@ -31,6 +33,7 @@ class FlutterHtmlToPdf {
   /// Creates PDF Document from path to File that contains HTML content
   /// Can throw a [PlatformException] or (unlikely) a [MissingPluginException] converting html to pdf
   static Future<File> convertFromHtmlFilePath(String htmlFilePath, String targetDirectory, String targetName) async {
+    await FileUtils.appendStyleTagToHtmlFile(htmlFilePath);
     final generatedPdfFilePath = await _convertFromHtmlFilePath(htmlFilePath);
     final generatedPdfFile = FileUtils.copyAndDeleteOriginalFile(generatedPdfFilePath, targetDirectory, targetName);
 

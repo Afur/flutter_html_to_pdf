@@ -6,14 +6,14 @@ class PDFCreator {
      Creates a PDF using the given print formatter and saves it to the user's document directory.
      - returns: The generated PDF path.
      */
-    class func create(printFormatter: UIPrintFormatter) -> URL {
+    class func create(printFormatter: UIPrintFormatter, width: Double, height: Double) -> URL {
         
         // assign the print formatter to the print page renderer
         let renderer = UIPrintPageRenderer()
         renderer.addPrintFormatter(printFormatter, startingAtPageAt: 0)
         
         // assign paperRect and printableRect values
-        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) // A4, 72 dpi
+        let page = CGRect(x: 0, y: 0, width: width, height: height)
         renderer.setValue(page, forKey: "paperRect")
         renderer.setValue(page, forKey: "printableRect")
         

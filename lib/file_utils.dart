@@ -12,4 +12,17 @@ class FileUtils {
     fileOriginal.delete();
     return fileCopy;
   }
+
+  static Future<void> appendStyleTagToHtmlFile(String htmlPath) async {
+    String printStyleHtml = """
+      <style>
+        @media print {
+        * {
+            -webkit-print-color-adjust: exact !important;
+          }
+        }
+      </style>
+    """;
+    await File(htmlPath).writeAsString(printStyleHtml,mode: FileMode.append);
+  }
 }

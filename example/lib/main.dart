@@ -25,14 +25,15 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: buildBody(),
+      home: Scaffold(
+        body: SafeArea(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: buildBody(),
+          ),
         ),
       ),
-    ));
+    );
   }
 
   Column buildBody() {
@@ -104,9 +105,13 @@ class _MyAppState extends State<MyApp> {
     final targetFileName = "example-pdf";
 
     final generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
-      htmlContent,
-      targetPath,
-      targetFileName,
+      htmlContent: htmlContent,
+      printPdfConfiguration: PrintPdfConfiguration(
+        targetDirectory: targetPath,
+        targetName: targetFileName,
+        printSize: PrintSize.A4,
+        printOrientation: PrintOrientation.Portrait,
+      ),
     );
 
     setState(

@@ -54,8 +54,8 @@ class HtmlToPdfConverter {
             }
 
             when (orientation) {
-                "LANDSCAPE" -> mediaSize = mediaSize.asPortrait()
-                "PORTRAIT" -> mediaSize = mediaSize.asLandscape()
+                "LANDSCAPE" -> mediaSize = mediaSize.asLandscape()
+                "PORTRAIT" -> mediaSize = mediaSize.asPortrait()
             }
 
             val attributes = PrintAttributes.Builder()
